@@ -1,18 +1,17 @@
-const pool = require('./db');
+const EquipamentoService = require('./services/EquipamentoService');
 
-async function testarConexao() {
+const service = new EquipamentoService();
+
+async function testar() {
     try {
-        const resultado = await pool.query(
-            'SELECT * FROM equipamentos ORDER BY id'
-        );
+        const equipamento = await service.alterarDisponibilidade(1, false);
 
-        console.log('Conexão realizada com sucesso!');
-        console.table(resultado.rows);
+        console.log('Disponibilidade alterada:');
+        console.log(equipamento);
+
     } catch (erro) {
-        console.error('Erro:', erro.message);
-    } finally {
-        await pool.end();
+        console.error('Erro ao alterar disponibilidade:', erro);
     }
 }
 
-testarConexao();
+testar();

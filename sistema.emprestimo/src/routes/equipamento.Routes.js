@@ -1,13 +1,12 @@
-const express = require('express');
-const EquipamentoService = require('../services/EquipamentoService');
+import { Router } from 'express';
+import { equipamentoService } from '../services/Equipamento.Service.js';
 
-const router = express.Router();
-const service = new EquipamentoService();
+export const equipRouter = Router();
 
 // Listar todos os equipamentos
-router.get('/equipamentos', async (req, res) => {
+equipRouter.get('/equipamentos', async (req, res) => {
     try {
-        const equipamentos = await service.listarTodos();
+        const equipamentos = await equipamentoService.listarTodos();
 
         res.json(equipamentos);
     } catch (erro) {
@@ -18,11 +17,11 @@ router.get('/equipamentos', async (req, res) => {
 });
 
 // Buscar equipamento pelo ID
-router.get('/equipamentos/:id', async (req, res) => {
+equipRouter.get('/equipamentos/:id', async (req, res) => {
     try {
         const id = Number(req.params.id);
 
-        const equipamento = await service.buscarPorId(id);
+        const equipamento = await equipamentoService.buscarPorId(id);
 
         if (!equipamento) {
             return res.status(404).json({
@@ -39,7 +38,7 @@ router.get('/equipamentos/:id', async (req, res) => {
 });
 
 // Cadastrar equipamento
-router.post('/equipamentos', async (req, res) => {
+equipRouter.post('/equipamentos', async (req, res) => {
     try {
         const {
             nome,
@@ -48,7 +47,7 @@ router.post('/equipamentos', async (req, res) => {
             disponivel
         } = req.body;
 
-        const equipamento = await service.cadastrar(
+        const equipamento = await equipamentoService.cadastrar(
             nome,
             categoria,
             condicao_uso,
@@ -64,12 +63,12 @@ router.post('/equipamentos', async (req, res) => {
 });
 
 // Alterar disponibilidade
-router.patch('/equipamentos/:id/disponibilidade', async (req, res) => {
+equipRouter.patch('/equipamentos/:id/disponibilidade', async (req, res) => {
     try {
         const id = Number(req.params.id);
         const { disponivel } = req.body;
 
-        const equipamento = await service.alterarDisponibilidade(
+        const equipamento = await equipamentoService.alterarDisponibilidade(
             id,
             disponivel
         );
@@ -87,5 +86,3 @@ router.patch('/equipamentos/:id/disponibilidade', async (req, res) => {
         });
     }
 });
-
-module.exports = router;

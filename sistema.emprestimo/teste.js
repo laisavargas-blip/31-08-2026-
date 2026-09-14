@@ -1,4 +1,4 @@
-const EquipamentoService = require('./services/EquipamentoService');
+const EquipamentoService = require('./services/Equipamento.Service');
 
 const service = new EquipamentoService();
 

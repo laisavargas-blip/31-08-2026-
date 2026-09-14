@@ -1,4 +1,4 @@
-const pool = require('../db');
+import { pool } from '../database/db.js';
 
 class EquipamentoService {
 
@@ -44,4 +44,4 @@ class EquipamentoService {
     }
 }
 
-module.exports = EquipamentoService;
+export const equipamentoService = new EquipamentoService();

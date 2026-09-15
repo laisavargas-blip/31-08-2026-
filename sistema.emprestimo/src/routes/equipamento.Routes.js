@@ -54,6 +54,12 @@ equipRouter.post('/equipamentos', async (req, res) => {
             disponivel
         );
 
+        if (!nome || !categoria || !condicao_uso || disponivel === undefined) {
+    return res.status(400).json({
+        erro: 'Todos os campos são obrigatórios'
+    });
+}
+
         res.status(201).json(equipamento);
     } catch (erro) {
         res.status(500).json({
@@ -85,4 +91,11 @@ equipRouter.patch('/equipamentos/:id/disponibilidade', async (req, res) => {
             erro: 'Erro ao alterar disponibilidade'
         });
     }
+});
+// Verificar se o servidor está ativo
+equipRouter.get('/health', (req, res) => {
+    res.json({
+        status: 'ok',
+        mensagem: 'Servidor funcionando'
+    });
 });

@@ -10,7 +10,7 @@ app.get("/", (req, res) => {
     res.send("Bem-vindo à API de Equipamentos!");
 });
 
-app.use("/equipamentos", equipRouter);
+app.use("/", equipRouter);
 
 const PORT = 3000;
 
